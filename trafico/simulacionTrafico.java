@@ -31,15 +31,9 @@ public  class simulacionTrafico extends ZonaJuego {
     public ArrayList <Semaforo> semaforos;
     private static String RUTAIMAGENFONDO = "/imagenes/ciudad/ciudad.jpg";
     private Image IMAGENEFONDO = new ImageIcon(getClass().getResource(RUTAIMAGENFONDO)).getImage();
-    public ArrayList<automovil> autos;
-    private static String RUTAIMAGENAUTOARRIBA = "/imagenes/carro/carroArriba.png";
-    private Image IMAGENCARROARRIBA = new ImageIcon(getClass().getResource(RUTAIMAGENAUTOARRIBA)).getImage();
-    private static String RUTAIMAGENAUTOABAJO = "/imagenes/carro/carroAbajo.png";
-    private Image IMAGENCARROABAJO = new ImageIcon(getClass().getResource(RUTAIMAGENAUTOABAJO)).getImage();
-    private static String RUTAIMAGENAUTOIZQUIERDA = "/imagenes/carro/carro.png";
-    private Image IMAGENCARROIZQUIERDA = new ImageIcon(getClass().getResource(RUTAIMAGENAUTOIZQUIERDA)).getImage();
+    public ArrayList<Auto> autos;
     private int tiempoTotalCarros=0;
-    private final int TIEMPOCREARCARRO=650;
+    private final int TIEMPOCREARCARRO=500;
 
 
     public simulacionTrafico() {
@@ -55,7 +49,7 @@ public  class simulacionTrafico extends ZonaJuego {
                 s.apagar();
          }
 
-       autos= new ArrayList<automovil>();
+       autos= new ArrayList<Auto>();
        listaCalles=new ArrayList<Calle>();
        listaCalles.add(calle1);
        listaCalles.add(calle2);
@@ -77,7 +71,7 @@ public  class simulacionTrafico extends ZonaJuego {
                 s.actualizar((int)tiempo);
             }
             for(int i= 0; i<autos.size(); i++){
-                automovil aux=autos.get(i);
+                Auto aux=autos.get(i);
                 if(aux.getPosX()<0 || aux.getPosX()> 1100 || aux.getPosY()<0 || aux.getPosY()>460){
                     autos.remove(i);
                     break;
@@ -111,26 +105,22 @@ public  class simulacionTrafico extends ZonaJuego {
 
         int randomCalle=(int) (Math.random() * listaCalles.size());
         int randomCarril=(int)(Math.random() * listaCalles.get(randomCalle).getCarriles().length);
-
-        DireccionCalle dir=listaCalles.get(randomCalle).getCarriles()[randomCarril].getDireccion();
-        Image imagen;
-        switch (dir){
-            case IZQUIERDA:
-                imagen=IMAGENCARROIZQUIERDA;
-            break;
-            case ABAJO:
-                imagen=IMAGENCARROABAJO;
-            break;
-            case ARRIBA:
-                imagen=IMAGENCARROARRIBA;
-            break;
-            default:
-                imagen=IMAGENCARROIZQUIERDA;
-                break;
+        int tipo=(int)(Math.random()*4);
+        if(tipo==0){
+           autos.add( new Ambulancia(listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos));
+          
+        }else{
+            if(tipo==1){
+                autos.add( new Patrulla(listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos));
+               
+            }else{
+                if(tipo==2){
+                 autos.add( new automovil(listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos));
+                }else{
+                 autos.add( new Tamalero(listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos));
+                }
+            }
         }
-
-         autos.add( new automovil(imagen, listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos));
-
 
     }
 

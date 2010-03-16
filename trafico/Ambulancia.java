@@ -5,32 +5,25 @@
 
 package trafico;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
-
-
 /**
  *
- * @author Chostisli
+ * @author Ruco
  */
-public class automovil extends Auto {
-    protected String RUTAIMAGENAUTOARRIBA = "/imagenes/carro/carroArriba.png";
-    protected String RUTAIMAGENAUTOABAJO = "/imagenes/carro/carroAbajo.png";
-    protected String RUTAIMAGENAUTOIZQUIERDA = "/imagenes/carro/carro.png";
-    protected String RUTAIMAGENAUTODERECHA = "/imagenes/carro/carroDerecha.png";
-
-
-    public automovil( Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforo){
-       super(miCarril, lCoches, semaforo);
+public class Ambulancia extends Auto {
+    private  String RUTAIMAGENAUTOARRIBA = "/imagenes/ambulancia/ambulanciaArr.png";
+    private  String RUTAIMAGENAUTOABAJO = "/imagenes/ambulancia/ambulanciaAba.png";
+    private  String RUTAIMAGENAUTOIZQUIERDA = "/imagenes/ambulancia/ambulanciaIzq.png";
+    private  String RUTAIMAGENAUTODERECHA = "/imagenes/ambulancia/ambulanciaDer.png";
+    
+    public Ambulancia(Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos){
+        super(miCarril, lCoches, semaforos);
         seleccionarImagen(this.getDireccion());
-       
+
     }
-       protected   void seleccionarImagen(DireccionCalle direccion){
+    protected  void seleccionarImagen(DireccionCalle direccion){
         switch(direccion){
             case ABAJO:
                 this.imagen=new ImageIcon(getClass().getResource(RUTAIMAGENAUTOABAJO)).getImage();
@@ -47,7 +40,4 @@ public class automovil extends Auto {
 
         }
    }
-
-   
-
 }
