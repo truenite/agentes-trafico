@@ -20,8 +20,8 @@ public class Patrulla extends Auto {
 
 
 
-    public Patrulla(Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos){
-        super(miCarril, lCoches, semaforos);
+    public Patrulla(Calle calle,Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos){
+        super(calle,miCarril, lCoches, semaforos);
         seleccionarImagen(this.getDireccion());
          this.setVelocidadActual(1.5f);
 

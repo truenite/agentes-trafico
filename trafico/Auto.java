@@ -17,17 +17,17 @@ import javax.swing.ImageIcon;
  * @author Ruco
  */
 public abstract class Auto {
-    private int inicioX;//posiciones iniciales del automovil
-    private int inicioY;
-    private Carril miCarril;
+    protected  int inicioX;//posiciones iniciales del automovil
+    protected int inicioY;
+    protected Carril miCarril;
     private DireccionCalle direccion;
     protected  Image imagen ;
-    private float  posX; //posiciones actuales del autmÃ³vil en  (X,Y)
-    private float posY;
-    private  ArrayList <Auto> listaCoches;
-    private  ArrayList <Semaforo> semaforos;
-    private final int ANCHOAUTO=25;
-    private final int ALTOAUTO=50;
+    protected float  posX; //posiciones actuales del autmÃ³vil en  (X,Y)
+    protected float posY;
+    protected   ArrayList <Auto> listaCoches;
+    protected   ArrayList <Semaforo> semaforos;
+    protected final int ANCHOAUTO=25;
+    protected  final int ALTOAUTO=50;
     private float velocidadActual; //Velocidades actuales del automÃ³vil    private float velocidadY
     protected boolean puedeCambiarIzquierda; //Bandera que indica si puede cambiar de carril a la izquierda.
     protected boolean puedeCambiarDerecha; //Bandera que indica si puede cambiar de carril a la derecha.
@@ -37,11 +37,12 @@ public abstract class Auto {
     protected String RUTAIMAGENAUTOABAJO ;
     protected String RUTAIMAGENAUTOIZQUIERDA;
     protected String RUTAIMAGENAUTODERECHA ;
+    protected Calle calle;
 
-
-     public Auto(Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos){
+     public Auto(Calle calle,Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos){
         this.inicioX =  (int)miCarril.getPuntoInicial().getX();
         this.posX =inicioX;
+        this.calle=calle;
         this.inicioY =(int)miCarril.getPuntoInicial().getY();
         this. posY = inicioY;
         this.velocidadActual = 0;
@@ -141,10 +142,11 @@ public abstract class Auto {
 
     public void colisionesHorizontales(int posicion){
          puedeAvanzar = true;
+         int ancho=this.getCarril().getAncho();
          for(int i =0; i < listaCoches.size(); i++){
              if(i!=posicion){
                 Auto aux= listaCoches.get(i);
-                if(this.getPuntoInicial().equals(aux.getPuntoInicial())){
+                if(this.getCarril().equals(aux.getCarril())){
                     if(this.getPosX()> aux.getPosX()){
                         if((this.getPosX()-aux.getPosX())<this.ALTOAUTO){
                            this.puedeAvanzar = false;
@@ -186,7 +188,6 @@ public abstract class Auto {
                     }
 
                 }
-
                 // Checamos colisiones con otros autos:
                  if((aux.getPosX() + 50) >= (this.getPosX())&&
                     (aux.getPosX() ) <= (this.getPosX()+ 27) &&
@@ -199,7 +200,7 @@ public abstract class Auto {
                 }
             }
         }
-          colisionSemaforos();
+         colisionSemaforos();
          avanzarY();
     }
 

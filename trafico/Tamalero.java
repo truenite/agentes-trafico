@@ -17,10 +17,10 @@ public class Tamalero extends Auto {
     private  String RUTAIMAGENAUTOABAJO = "/imagenes/tamalero/tamaleroAba.png";
     private  String RUTAIMAGENAUTOIZQUIERDA = "/imagenes/tamalero/tamaleroIzq.png";
     private  String RUTAIMAGENAUTODERECHA = "/imagenes/tamalero/tamaleroDer.png";
-    public Tamalero(Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos){
-        super(miCarril, lCoches, semaforos);
+    public Tamalero(Calle calle,Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos){
+        super(calle,miCarril, lCoches, semaforos);
         seleccionarImagen(this.getDireccion());
-        this.setVelocidadActual(0.25f);
+        this.setVelocidadActual(0.5f);
 
     }
     protected  void seleccionarImagen(DireccionCalle direccion){

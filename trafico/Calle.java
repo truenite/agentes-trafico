@@ -97,6 +97,35 @@ public class Calle implements  Comparable<Calle> {
         return (int)Math.random()*carriles.length;
     }
 
+    public Carril getCarrilesLateralMayor(Carril carril){
+      int i=0;
+      for(;i<carriles.length; i++){
+          if(carril.equals(carriles[i])){
+              break;
+          }
+      }
+      if(i<carriles.length-1){
+          if(carriles[i+1].getDireccion()==carril.getDireccion()){
+              return carriles[i+1];
+          }
+      }
+      return null;
+    }
+    
+    public Carril getCarrilesLateralMenor(Carril carril){
+      int i=0;
+      for(;i<carriles.length; i++){
+          if(carril.equals(carriles[i])){
+              break;
+          }
+      }
+      if(i>0){
+          if(carriles[i-1].getDireccion()==carril.getDireccion()){
+              return carriles[i-1];
+          }
+      }
+      return null;
+    }
     public int compareTo(Calle o) {
        if(this.puntoInicial.equals(o.getPosicionInicial())){
            return 0;

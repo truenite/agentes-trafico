@@ -18,8 +18,8 @@ public class Ambulancia extends Auto {
     private  String RUTAIMAGENAUTOIZQUIERDA = "/imagenes/ambulancia/ambulanciaIzq.png";
     private  String RUTAIMAGENAUTODERECHA = "/imagenes/ambulancia/ambulanciaDer.png";
     
-    public Ambulancia(Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos){
-        super(miCarril, lCoches, semaforos);
+    public Ambulancia(Calle calle,Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos){
+        super(calle,miCarril, lCoches, semaforos);
         seleccionarImagen(this.getDireccion());
         this.setVelocidadActual(2);
 
