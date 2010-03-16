@@ -28,6 +28,7 @@ public class automovil extends Auto {
     public automovil( Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforo){
        super(miCarril, lCoches, semaforo);
         seleccionarImagen(this.getDireccion());
+        this.setVelocidadActual(1);
        
     }
        protected   void seleccionarImagen(DireccionCalle direccion){

@@ -20,6 +20,7 @@ public class Tamalero extends Auto {
     public Tamalero(Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos){
         super(miCarril, lCoches, semaforos);
         seleccionarImagen(this.getDireccion());
+        this.setVelocidadActual(0.25f);
 
     }
     protected  void seleccionarImagen(DireccionCalle direccion){
@@ -39,5 +40,6 @@ public class Tamalero extends Auto {
 
         }
    }
+     public void colisionSemaforos(){}
 
 }

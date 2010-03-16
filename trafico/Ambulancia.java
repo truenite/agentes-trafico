@@ -21,6 +21,7 @@ public class Ambulancia extends Auto {
     public Ambulancia(Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos){
         super(miCarril, lCoches, semaforos);
         seleccionarImagen(this.getDireccion());
+        this.setVelocidadActual(2);
 
     }
     protected  void seleccionarImagen(DireccionCalle direccion){

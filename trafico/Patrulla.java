@@ -23,6 +23,7 @@ public class Patrulla extends Auto {
     public Patrulla(Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos){
         super(miCarril, lCoches, semaforos);
         seleccionarImagen(this.getDireccion());
+         this.setVelocidadActual(1.5f);
 
     }
     protected  void seleccionarImagen(DireccionCalle direccion){

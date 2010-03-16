@@ -22,13 +22,13 @@ public abstract class Auto {
     private Carril miCarril;
     private DireccionCalle direccion;
     protected  Image imagen ;
-    private int posX; //posiciones actuales del autmÃ³vil en  (X,Y)
-    private int posY;
+    private float  posX; //posiciones actuales del autmÃ³vil en  (X,Y)
+    private float posY;
     private  ArrayList <Auto> listaCoches;
     private  ArrayList <Semaforo> semaforos;
     private final int ANCHOAUTO=25;
     private final int ALTOAUTO=50;
-    private int velocidadActual; //Velocidades actuales del automÃ³vil    private float velocidadY
+    private float velocidadActual; //Velocidades actuales del automÃ³vil    private float velocidadY
     protected boolean puedeCambiarIzquierda; //Bandera que indica si puede cambiar de carril a la izquierda.
     protected boolean puedeCambiarDerecha; //Bandera que indica si puede cambiar de carril a la derecha.
     protected boolean sePuedeDibujar;
@@ -40,8 +40,10 @@ public abstract class Auto {
 
 
      public Auto(Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos){
-        this.inicioX = posX = (int)miCarril.getPuntoInicial().getX();
-        this.inicioY = posY = (int)miCarril.getPuntoInicial().getY();
+        this.inicioX =  (int)miCarril.getPuntoInicial().getX();
+        this.posX =inicioX;
+        this.inicioY =(int)miCarril.getPuntoInicial().getY();
+        this. posY = inicioY;
         this.velocidadActual = 0;
         this.miCarril = miCarril;
         this.listaCoches = lCoches;
@@ -49,21 +51,23 @@ public abstract class Auto {
         //seleccionarImagen(this.direccion);
         this.semaforos=semaforos;
         if(direccion == DireccionCalle.IZQUIERDA ){
-            this.inicioX = posX = miCarril.getLongitud() - this.ALTOAUTO;
+            this.inicioX =  miCarril.getLongitud() - this.ALTOAUTO;
+            posX =inicioX;
         }
         if(direccion == DireccionCalle.ARRIBA){
-            this.inicioY = posY = miCarril.getLongitud() - this.ALTOAUTO;
+            this.inicioY =  miCarril.getLongitud() - this.ALTOAUTO;
+            posY =inicioY;
         }
     }
 
     abstract void seleccionarImagen(DireccionCalle direccion);
 
     public int getPosX(){
-        return posX;
+        return (int) posX;
     }
 
     public int getPosY(){
-        return posY;
+        return(int) posY;
     }
 
     public float getVelocidadActual(){
@@ -74,7 +78,7 @@ public abstract class Auto {
         return this.miCarril;
     }
 
-    public void setVelocidadActual(int X){
+    public void setVelocidadActual(float  X){
          this.velocidadActual = X;
     }
     public Point getPuntoInicial(){
@@ -99,21 +103,21 @@ public abstract class Auto {
 
     public void avanzarX(){
         if(puedeAvanzar == true && direccion == DireccionCalle.IZQUIERDA){
-            setVelocidadActual(1);
-            posX -= (int)velocidadActual;
+            
+            posX -= velocidadActual;
         }
     }
 
     public void avanzarY(){
         if(puedeAvanzar == true && direccion == DireccionCalle.ABAJO){
-            setVelocidadActual(1);
-            posY += (int)velocidadActual;
+            
+            posY += velocidadActual;
         }else{
             if(puedeAvanzar == true && direccion == DireccionCalle.ARRIBA){
-                setVelocidadActual(1);
-                posY -= (int)velocidadActual;
+               
+                posY -= velocidadActual;
             }else{
-                setVelocidadActual(0);
+                
             }
 
        }
@@ -122,9 +126,9 @@ public abstract class Auto {
     public void dibujarAutomovil(Graphics g){
       // if(sePuedeDibujar = true){
 
-         g.drawImage(imagen, posX+3,posY, null);
+         g.drawImage(imagen, ((int)posX)+3,(int)posY, null);
          g.setColor(Color.yellow);
-         g.drawRect(this.getPosX(), this.posY, 3, 3);
+         g.drawRect(this.getPosX(), ((int)this.posY), 3, 3);
        //}
     }
 
