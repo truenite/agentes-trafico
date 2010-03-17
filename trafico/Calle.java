@@ -100,7 +100,7 @@ public class Calle implements  Comparable<Calle> {
     public Carril getCarrilesLateralMayor(Carril carril){
       int i=0;
       for(;i<carriles.length; i++){
-          if(carril.equals(carriles[i])){
+          if(carriles[i].equals(carril)){
               break;
           }
       }
@@ -115,12 +115,12 @@ public class Calle implements  Comparable<Calle> {
     public Carril getCarrilesLateralMenor(Carril carril){
       int i=0;
       for(;i<carriles.length; i++){
-          if(carril.equals(carriles[i])){
+          if(carriles[i].equals(carril)){
               break;
           }
       }
       if(i>0){
-          if(carriles[i-1].getDireccion()==carril.getDireccion()){
+          if(carril!= null && carriles[i-1].getDireccion()==carril.getDireccion()){
               return carriles[i-1];
           }
       }

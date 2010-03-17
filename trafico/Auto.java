@@ -179,7 +179,7 @@ public abstract class Auto {
          for(int i =0; i < listaCoches.size(); i++){
              if(i!=posicion){
                 Auto aux= listaCoches.get(i);
-                if(this.getPuntoInicial().equals(aux.getPuntoInicial())){
+                if(this.getCarril().equals(aux.getCarril())){
                     if(this.getPosY()> aux.getPosY()){
                         if((this.getPosY()-aux.getPosY())<this.ALTOAUTO){
                            this.puedeAvanzar = false;
@@ -210,7 +210,7 @@ public abstract class Auto {
         for(int i =0; i < listaCoches.size(); i++){
              if(i!=posicion){
                 Auto aux= listaCoches.get(i);
-                if(this.getPuntoInicial().equals(aux.getPuntoInicial())){
+                if(this.getCarril().equals(aux.getCarril())){
                     if(this.getPosY()< aux.getPosY()){
                         if((aux.getPosY() -this.getPosY())<this.ALTOAUTO){
                            this.puedeAvanzar = false;
