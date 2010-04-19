@@ -44,7 +44,6 @@ public abstract class ZonaJuego extends JPanel implements Runnable {
     }
     // Este es el método que ejecuta el Thread
     public void run() {
-
         // Indicamos que el juego inicia su ejecución
         juegoCorriendo = true;
         setFocusable(true);
@@ -64,7 +63,8 @@ public abstract class ZonaJuego extends JPanel implements Runnable {
 
             try {   // Espera un momento para la animación
                 Thread.sleep(RETARDO - tiempoTranscurrido / 1000000);  // ms. entre c/frame
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
             }
         }
     //System.exit(1);
@@ -79,7 +79,7 @@ public abstract class ZonaJuego extends JPanel implements Runnable {
     }
     //
     private void actualizarJuego(long tiempo) {
-        if (!juegoTerminado /*&& !juegoPausado*/) {
+        if (!juegoTerminado && !juegoPausado) {
             // Actualiza posiciones, revisa si hay choques, etc.
             actualizar(tiempo);   // Debe estar implementado en la subclase
         // Falta enviar el tiempo transcurrido, esto en otra version...
