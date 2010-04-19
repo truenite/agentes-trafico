@@ -20,7 +20,7 @@ public abstract class Auto {
     protected  int inicioX;//posiciones iniciales del automovil
     protected int inicioY;
     protected Carril miCarril;
-    private DireccionCalle direccion;
+    protected DireccionCalle direccion;
     protected  Image imagen ;
     protected float  posX; //posiciones actuales del autmÃ³vil en  (X,Y)
     protected float posY;
@@ -39,12 +39,12 @@ public abstract class Auto {
     protected String RUTAIMAGENAUTODERECHA ;
     protected Calle calle;
 
-     public Auto(Calle calle,Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos){
+     public Auto(Calle calle,Carril miCarril, ArrayList <Auto>lCoches, ArrayList<Semaforo> semaforos){
         this.inicioX =  (int)miCarril.getPuntoInicial().getX();
         this.posX =inicioX;
         this.calle=calle;
         this.inicioY =(int)miCarril.getPuntoInicial().getY();
-        this. posY = inicioY;
+        this.posY = inicioY;
         this.velocidadActual = 0;
         this.miCarril = miCarril;
         this.listaCoches = lCoches;
@@ -85,21 +85,23 @@ public abstract class Auto {
     public Point getPuntoInicial(){
         return new Point(this.inicioX,this.inicioY);
     }
-
     public void actualizar(long tiempoTranscurrido,int posicion){
 
-       if(direccion == DireccionCalle.IZQUIERDA ){
-
-               colisionesHorizontales(posicion);
-       }
-       if(direccion == DireccionCalle.ABAJO){
-
-               colisionesVerticalesAbajo(posicion);
-       }
-       if(direccion == DireccionCalle.ARRIBA){
-
-               colisionesVerticalesArriba(posicion);
-       }
+        if(direccion == DireccionCalle.IZQUIERDA ){
+            colisionesHorizontales(posicion);
+            colisionSemaforos();
+            avanzarX();
+        }
+        if(direccion == DireccionCalle.ABAJO){
+            colisionesVerticalesAbajo(posicion);
+            colisionSemaforos();
+            avanzarY();
+        }
+        if(direccion == DireccionCalle.ARRIBA){
+            colisionesVerticalesArriba(posicion);
+            colisionSemaforos();
+            avanzarY();
+        }
     }
 
     public void avanzarX(){
@@ -134,13 +136,7 @@ public abstract class Auto {
     }
 
 
-    public void cambiarCarril(){
-
-    }
-
-
-
-    public void colisionesHorizontales(int posicion){
+    public Auto colisionesHorizontales(int posicion){
          puedeAvanzar = true;
          int ancho=this.getCarril().getAncho();
          for(int i =0; i < listaCoches.size(); i++){
@@ -155,7 +151,6 @@ public abstract class Auto {
                     }
 
                 }
-
                 // Checamos colisiones con otros autos:
                 if((aux.getPosY())<= this.getPosY()+27 &&
                     (aux.getPosY()) >= this.getPosY()-45 &&
@@ -164,17 +159,13 @@ public abstract class Auto {
                    (!aux.getDireccion().equals(DireccionCalle.IZQUIERDA) && !aux.getDireccion().equals(DireccionCalle.DERECHA))){
                         puedeAvanzar = false;
                         break;
-
                 }
             }
         }
-         colisionSemaforos();
-         avanzarX();
-
-
+        return null;
     }
 
-    public void colisionesVerticalesArriba(int posicion){
+    public Auto colisionesVerticalesArriba(int posicion){
         puedeAvanzar = true;
          for(int i =0; i < listaCoches.size(); i++){
              if(i!=posicion){
@@ -189,23 +180,21 @@ public abstract class Auto {
 
                 }
                 // Checamos colisiones con otros autos:
-                 if((aux.getPosX() + 50) >= (this.getPosX())&&
-                    (aux.getPosX() ) <= (this.getPosX()+ 27) &&
-                    getPosY() <= (aux.getPosY() + ANCHOAUTO+5) &&
-                    getPosY() > aux.getPosY() &&
-                    (!aux.getDireccion().equals(DireccionCalle.ABAJO) && !aux.getDireccion().equals(DireccionCalle.ARRIBA))){
-                        this.puedeAvanzar = false;
-                        break;
-
+                if((aux.getPosX() + 50) >= (this.getPosX())&&
+                (aux.getPosX() ) <= (this.getPosX()+ 27) &&
+                getPosY() <= (aux.getPosY() + ANCHOAUTO+5) &&
+                getPosY() > aux.getPosY() &&
+                (!aux.getDireccion().equals(DireccionCalle.ABAJO) && !aux.getDireccion().equals(DireccionCalle.ARRIBA))){
+                    this.puedeAvanzar = false;
+                    break;
                 }
             }
         }
-         colisionSemaforos();
-         avanzarY();
+        return null;
     }
 
 
-    public void colisionesVerticalesAbajo(int posicion){
+    public Auto colisionesVerticalesAbajo(int posicion){
         puedeAvanzar = true;
         for(int i =0; i < listaCoches.size(); i++){
              if(i!=posicion){
@@ -219,26 +208,21 @@ public abstract class Auto {
                     }
 
                 }
-
-                     // Checamos colisiones con otros autos:
-                  if((aux.getPosX() + 50) >= (this.getPosX()) &&
-                    (aux.getPosX() -3 ) <= (this.getPosX() +27) &&
-                    (getPosY() + ALTOAUTO) > (aux.getPosY()) &&
-                    (getPosY() + ALTOAUTO) < (aux.getPosY() + ANCHOAUTO) &&
-                    (!aux.getDireccion().equals(DireccionCalle.ABAJO) && !aux.getDireccion().equals(DireccionCalle.ARRIBA))){
-                        this.puedeAvanzar = false;
-                        break;
-                 }
+                // Checamos colisiones con otros autos:
+                if((aux.getPosX() + 50) >= (this.getPosX()) &&
+                (aux.getPosX() -3 ) <= (this.getPosX() +27) &&
+                (getPosY() + ALTOAUTO) > (aux.getPosY()) &&
+                (getPosY() + ALTOAUTO) < (aux.getPosY() + ANCHOAUTO) &&
+                (!aux.getDireccion().equals(DireccionCalle.ABAJO) && !aux.getDireccion().equals(DireccionCalle.ARRIBA))){
+                    this.puedeAvanzar = false;
+                    break;
+                }
             }
-
-
-
         }
-         colisionSemaforos();
-         avanzarY();
+        return null;
     }
     public void colisionSemaforos(){
-        for (int i=0; i<semaforos.size();i++){
+        for (int i=0; i <semaforos.size();i++){
             int rojo=semaforos.get(i).esRojoCarril(this.getCarril());
             if(rojo>0){
                 if(this.direccion==direccion.ABAJO ){
@@ -261,9 +245,6 @@ public abstract class Auto {
                         this.puedeAvanzar=false;
                     }
                 }
-
-
-
             }
         }
     }
@@ -271,5 +252,4 @@ public abstract class Auto {
     public DireccionCalle getDireccion(){
         return direccion;
     }
-
 }

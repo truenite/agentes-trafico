@@ -15,6 +15,7 @@ import java.awt.Image;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import java.awt.Point;
+import javax.swing.JTextArea;
 
 public  class simulacionTrafico extends ZonaJuego {
 
@@ -34,6 +35,7 @@ public  class simulacionTrafico extends ZonaJuego {
     public ArrayList<Auto> autos;
     private int tiempoTotalCarros=0;
     private final int TIEMPOCREARCARRO=500;
+    private JTextArea textArea;
 
 
     public simulacionTrafico() {
@@ -45,17 +47,19 @@ public  class simulacionTrafico extends ZonaJuego {
         semaforos.add(new Semaforo(calle1,calle2, 4000,1000));
         semaforos.add(new Semaforo(calle1, calle3,4000,1000));
         semaforos.add(new Semaforo(calle1, calle4, 4000,1000));
-         for(Semaforo s: semaforos){
-                s.apagar();
-         }
+        for(Semaforo s: semaforos){
+            s.apagar();
+        }
+        autos= new ArrayList<Auto>();
+        listaCalles=new ArrayList<Calle>();
+        listaCalles.add(calle1);
+        listaCalles.add(calle2);
+        listaCalles.add(calle3);
+        listaCalles.add(calle4);
+    }
 
-       autos= new ArrayList<Auto>();
-       listaCalles=new ArrayList<Calle>();
-       listaCalles.add(calle1);
-       listaCalles.add(calle2);
-       listaCalles.add(calle3);
-       listaCalles.add(calle4);
-
+    public void agregarTextArea(JTextArea text){
+        this.textArea = text;
     }
 
     @Override
@@ -76,12 +80,14 @@ public  class simulacionTrafico extends ZonaJuego {
                     autos.remove(i);
                     break;
                 }else{
-                autos.get(i).actualizar(tiempo,i);
+                    autos.get(i).actualizar(tiempo,i);
                 }
             }
 
         }
     }
+
+
 
     @Override
     public void dibujar(Graphics g) {
@@ -101,8 +107,7 @@ public  class simulacionTrafico extends ZonaJuego {
         }
     }
 
-      public void agregarAuto (){
-
+      public void agregarAuto(){
         int randomCalle=(int) (Math.random() * listaCalles.size());
         int randomCarril=(int)(Math.random() * listaCalles.get(randomCalle).getCarriles().length);
         int tipo=(int)(Math.random()*10);
@@ -116,20 +121,15 @@ public  class simulacionTrafico extends ZonaJuego {
             }else{
                 if(tipo>=4 && tipo<9){
                  autos.add( new automovil(listaCalles.get(randomCalle),listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos));
-                }else{
+                }/*else{
                  autos.add( new Tamalero(listaCalles.get(randomCalle),listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos));
-                }
+                }*/
             }
         }
-
     }
 
-
     public boolean cambiarTiempoSemaforo(int semaforo, int tiempoHorizontal, int tiempoVertical){
-      return semaforos.get(semaforo).cambiarTiempo(tiempoHorizontal, tiempoVertical);
-      
-    
-
+        return semaforos.get(semaforo).cambiarTiempo(tiempoHorizontal, tiempoVertical);
     }
     public void encenderSemaforo(int semaforo){
         semaforos.get(semaforo).encender();
@@ -139,7 +139,7 @@ public  class simulacionTrafico extends ZonaJuego {
         semaforos.get(semaforo).apagar();
 
     }
-      public int[] getTiemposSemaforo(int semaforo){
-          return semaforos.get(semaforo).getTiempos();
-      }
+    public int[] getTiemposSemaforo(int semaforo){
+      return semaforos.get(semaforo).getTiempos();
+    }
 }

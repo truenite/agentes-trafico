@@ -28,7 +28,7 @@ public class Patrulla extends Auto {
     public Patrulla(Calle calle,Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos){
         super(calle,miCarril, lCoches, semaforos);
         seleccionarImagen(this.getDireccion());
-         this.setVelocidadActual(1.5f);
+        this.setVelocidadActual(1.5f);
         this.carrilLateralMayor = this.calle.getCarrilesLateralMayor(miCarril);
         if (carrilLateralMayor != null) {
             puedeCambiarCarrilMayor = true;
@@ -64,18 +64,22 @@ public class Patrulla extends Auto {
                 if (this.getDireccion() == DireccionCalle.IZQUIERDA) {
                     this.posY = this.carrilLateralMayor.getPuntoInicial().y;
                     this.miCarril = carrilLateralMayor;
+                    this.setVelocidadActual(1.5f);
                 } else {
                     this.posX = this.carrilLateralMayor.getPuntoInicial().x;
                     this.miCarril = carrilLateralMayor;
+                    this.setVelocidadActual(1.5f);
                 }
             } else {
                 if (this.puedeCambiarCarrilMenor == true && carrilLateralMenor != null) {
                     if (this.getDireccion() == DireccionCalle.IZQUIERDA) {
                         this.posY = this.carrilLateralMenor.getPuntoInicial().y;
                         this.miCarril = carrilLateralMenor;
+                        this.setVelocidadActual(1.5f);
                     } else {
                         this.posX = this.carrilLateralMenor.getPuntoInicial().x;
                         this.miCarril = carrilLateralMenor;
+                        this.setVelocidadActual(1.5f);
                     }
                 }
             }
@@ -84,7 +88,8 @@ public class Patrulla extends Auto {
         }
     }
 
-    public void colisionesHorizontales(int posicion) {
+    public Auto colisionesHorizontales(int posicion) {
+        Auto autoRegreso = null;
         if (this.carrilLateralMenor != null) {
             this.puedeCambiarCarrilMenor = true;
         }
@@ -101,7 +106,7 @@ public class Patrulla extends Auto {
                     if (this.getPosX() > aux.getPosX()) {
                         if ((this.getPosX() - aux.getPosX()) < this.ALTOAUTO) {
                             this.puedeAvanzar = false;
-
+                            autoRegreso = aux;
                         }
                     }
                     if ((aux instanceof Ambulancia )) {
@@ -140,16 +145,11 @@ public class Patrulla extends Auto {
 
             }
         }
-
-        colisionSemaforos();
-
-        avanzarX();
-        cambiarCarril();
-
-
+        return autoRegreso;
     }
 
-    public void colisionesVerticalesArriba(int posicion) {
+    public Auto colisionesVerticalesArriba(int posicion) {
+        Auto autoRegreso = null;
         if (this.carrilLateralMenor != null) {
             this.puedeCambiarCarrilMenor = true;
         }
@@ -166,10 +166,9 @@ public class Patrulla extends Auto {
                     if (this.getPosY() > aux.getPosY()) {
                         if ((this.getPosY() - aux.getPosY()) < this.ALTOAUTO) {
                             this.puedeAvanzar = false;
-                            break;
+                            autoRegreso = aux;
                         }
                     }
-
                     if ((aux instanceof Ambulancia )) {
                         if ((aux.getPosY() > this.getPosY()) && (aux.getPosY() - this.getPosY()) < this.ALTOAUTO +3) {
                             debeCambiarCarril = true;
@@ -203,12 +202,11 @@ public class Patrulla extends Auto {
                 }
             }
         }
-        colisionSemaforos();
-        avanzarY();
-        cambiarCarril();
+        return autoRegreso;
     }
 
-    public void colisionesVerticalesAbajo(int posicion) {
+    public Auto colisionesVerticalesAbajo(int posicion) {
+        Auto autoRegreso = null;
         if (this.carrilLateralMenor != null) {
             this.puedeCambiarCarrilMenor = true;
         }
@@ -225,7 +223,7 @@ public class Patrulla extends Auto {
                     if (this.getPosY() < aux.getPosY()) {
                         if ((aux.getPosY() - this.getPosY()) < this.ALTOAUTO) {
                             this.puedeAvanzar = false;
-                            break;
+                            autoRegreso = aux;
                         }
                     }
                     if ((aux instanceof Ambulancia )) {
@@ -265,8 +263,6 @@ public class Patrulla extends Auto {
 
 
         }
-        colisionSemaforos();
-        avanzarY();
-        cambiarCarril();
+        return autoRegreso;
     }
 }

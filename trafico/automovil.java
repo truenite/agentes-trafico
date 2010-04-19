@@ -62,24 +62,47 @@ public class automovil extends Auto {
         }
     }
 
+    public void actualizar(long tiempoTranscurrido,int posicion){
+        if(direccion == DireccionCalle.IZQUIERDA ){
+            colisionesHorizontales(posicion);
+            colisionSemaforos();
+            avanzarX();
+            cambiarCarril();
+        }
+        if(direccion == DireccionCalle.ABAJO){
+            colisionesVerticalesAbajo(posicion);
+            colisionSemaforos();
+            avanzarY();
+            cambiarCarril();
+        }
+        if(direccion == DireccionCalle.ARRIBA){
+            colisionesVerticalesArriba(posicion);
+            colisionSemaforos();
+            avanzarY();
+            cambiarCarril();
+        }
+    }
+
     public void cambiarCarril() {
-        if (debeCambiarCarril && colisionOtro == false) {
-            if (puedeCambiarCarrilMayor == true && carrilLateralMayor != null) {
+        if (debeCambiarCarril && !colisionOtro) {
+            if (puedeCambiarCarrilMayor && carrilLateralMayor != null) {
                 if (this.getDireccion() == DireccionCalle.IZQUIERDA) {
                     this.posY = this.carrilLateralMayor.getPuntoInicial().y;
                     this.miCarril = carrilLateralMayor;
                 } else {
                     this.posX = this.carrilLateralMayor.getPuntoInicial().x;
                     this.miCarril = carrilLateralMayor;
+                    this.setVelocidadActual(1);
                 }
             } else {
-                if (this.puedeCambiarCarrilMenor == true && carrilLateralMenor != null) {
+                if (this.puedeCambiarCarrilMenor && carrilLateralMenor != null) {
                     if (this.getDireccion() == DireccionCalle.IZQUIERDA) {
                         this.posY = this.carrilLateralMenor.getPuntoInicial().y;
                         this.miCarril = carrilLateralMenor;
                     } else {
                         this.posX = this.carrilLateralMenor.getPuntoInicial().x;
                         this.miCarril = carrilLateralMenor;
+                        this.setVelocidadActual(1);
                     }
                 }
             }
@@ -87,8 +110,8 @@ public class automovil extends Auto {
             this.carrilLateralMenor = calle.getCarrilesLateralMenor(miCarril);
         }
     }
-
-    public void colisionesHorizontales(int posicion) {
+    public Auto colisionesHorizontales(int posicion) {
+        Auto autoRegreso = null;
         if (this.carrilLateralMenor != null) {
             this.puedeCambiarCarrilMenor = true;
         }
@@ -105,7 +128,7 @@ public class automovil extends Auto {
                     if (this.getPosX() > aux.getPosX()) {
                         if ((this.getPosX() - aux.getPosX()) < this.ALTOAUTO) {
                             this.puedeAvanzar = false;
-
+                            autoRegreso = aux;
                         }
                     }
                     if ((aux instanceof Ambulancia || aux instanceof Patrulla)) {
@@ -129,7 +152,6 @@ public class automovil extends Auto {
                     }
 
                 }
-
                 // Checamos colisiones con otros autos:
                 if ((aux.getPosY()) <= this.getPosY() + 27
                         && (aux.getPosY()) >= this.getPosY() - 45
@@ -139,21 +161,12 @@ public class automovil extends Auto {
                     puedeAvanzar = false;
                     colisionOtro = true;
                 }
-
-                //checamos patrullas ambulancias atras
-
             }
         }
-
-        colisionSemaforos();
-
-        avanzarX();
-        cambiarCarril();
-
-
+        return autoRegreso;
     }
-
-    public void colisionesVerticalesArriba(int posicion) {
+    public Auto colisionesVerticalesArriba(int posicion) {
+        Auto autoRegreso = null;
         if (this.carrilLateralMenor != null) {
             this.puedeCambiarCarrilMenor = true;
         }
@@ -170,7 +183,7 @@ public class automovil extends Auto {
                     if (this.getPosY() > aux.getPosY()) {
                         if ((this.getPosY() - aux.getPosY()) < this.ALTOAUTO) {
                             this.puedeAvanzar = false;
-                            break;
+                            autoRegreso = aux;
                         }
                     }
 
@@ -202,17 +215,15 @@ public class automovil extends Auto {
                         && getPosY() > aux.getPosY()
                         && (!aux.getDireccion().equals(DireccionCalle.ABAJO) && !aux.getDireccion().equals(DireccionCalle.ARRIBA))) {
                     this.puedeAvanzar = false;
-                    break;
-
+                    autoRegreso = aux;
                 }
             }
         }
-        colisionSemaforos();
-        avanzarY();
-        cambiarCarril();
+        return autoRegreso;
     }
 
-    public void colisionesVerticalesAbajo(int posicion) {
+    public Auto colisionesVerticalesAbajo(int posicion) {
+        Auto autoRegreso = null;
         if (this.carrilLateralMenor != null) {
             this.puedeCambiarCarrilMenor = true;
         }
@@ -225,22 +236,19 @@ public class automovil extends Auto {
         for (int i = 0; i < listaCoches.size(); i++) {
             if (i != posicion) {
                 Auto aux = listaCoches.get(i);
-                if (this.getCarril().equals(aux.getCarril())) {
+                if(this.getCarril().equals(aux.getCarril())) {
                     if (this.getPosY() < aux.getPosY()) {
                         if ((aux.getPosY() - this.getPosY()) < this.ALTOAUTO) {
                             this.puedeAvanzar = false;
-                            break;
+                            autoRegreso = aux;
                         }
                     }
                     if ((aux instanceof Ambulancia || aux instanceof Patrulla)) {
                         if ((aux.getPosY() < this.getPosY()) && (this.getPosY() - aux.getPosY()) < this.ALTOAUTO + 3) {
                             debeCambiarCarril = true;
-
                         }
                     }
-
-
-                } else {
+                }else {
                     if (this.carrilLateralMayor != null && aux.getCarril().equals(this.carrilLateralMayor)) {
                         if ((aux.getPosY() + this.ALTOAUTO) > this.getPosY() && aux.getPosY() < (this.getPosY() + this.ALTOAUTO)) {
                             this.puedeCambiarCarrilMayor = false;
@@ -252,9 +260,7 @@ public class automovil extends Auto {
                             }
                         }
                     }
-
                 }
-
                 // Checamos colisiones con otros autos:
                 if ((aux.getPosX() + 50) >= (this.getPosX())
                         && (aux.getPosX() - 3) <= (this.getPosX() + 27)
@@ -262,15 +268,20 @@ public class automovil extends Auto {
                         && (getPosY() + ALTOAUTO) < (aux.getPosY() + ANCHOAUTO)
                         && (!aux.getDireccion().equals(DireccionCalle.ABAJO) && !aux.getDireccion().equals(DireccionCalle.ARRIBA))) {
                     this.puedeAvanzar = false;
-                    break;
+                    autoRegreso = aux;
                 }
             }
-
-
-
         }
-        colisionSemaforos();
-        avanzarY();
-        cambiarCarril();
+        return autoRegreso;
     }
+
+    public void recibirMensaje(Mensaje msj){
+        
+
+    }
+
+    public void mandarMensaje(Object obj){
+
+    }
+
 }
