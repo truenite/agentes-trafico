@@ -24,6 +24,7 @@ public class Patrulla extends Auto {
     protected boolean puedeCambiarCarrilMenor = false;
     protected boolean debeCambiarCarril = false;
     protected boolean colisionOtro = false;
+    protected int posicion;
 
 
     public Patrulla(Calle calle,Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos, JTextArea textArea) {
@@ -90,6 +91,7 @@ public class Patrulla extends Auto {
     }
 
     public Auto colisionesHorizontales(int posicion) {
+        this.posicion = posicion;
         Auto autoRegreso = null;
         if (this.carrilLateralMenor != null) {
             this.puedeCambiarCarrilMenor = true;
@@ -150,6 +152,7 @@ public class Patrulla extends Auto {
     }
 
     public Auto colisionesVerticalesArriba(int posicion) {
+        this.posicion = posicion;
         Auto autoRegreso = null;
         if (this.carrilLateralMenor != null) {
             this.puedeCambiarCarrilMenor = true;
@@ -207,6 +210,7 @@ public class Patrulla extends Auto {
     }
 
     public Auto colisionesVerticalesAbajo(int posicion) {
+        this.posicion = posicion;
         Auto autoRegreso = null;
         if (this.carrilLateralMenor != null) {
             this.puedeCambiarCarrilMenor = true;
@@ -268,9 +272,30 @@ public class Patrulla extends Auto {
     }
     public void recibirMensaje(Mensaje msj){
         String contenido = msj.getContenido();
-        if(contenido.equals("Dejame pasar")){
+        if(contenido.equals("Urge que te muevas")){
             Mensaje msjRespuesta = new Mensaje("tell",this,msj.getEmisor(),"Coloquial","trafico","Ahi voy",textArea);
-
+            ((Auto)msj.getEmisor()).recibirMensaje(msjRespuesta);
+            this.setVelocidadActual(2f);
+            Auto enfrente = null;
+            if(direccion == DireccionCalle.IZQUIERDA ){
+                enfrente = colisionesHorizontales(posicion);
+            }
+            if(direccion == DireccionCalle.ABAJO){
+                enfrente = colisionesVerticalesAbajo(posicion);
+            }
+            if(direccion == DireccionCalle.ARRIBA){
+                enfrente = colisionesVerticalesArriba(posicion);
+            }
+            if(enfrente != null){
+                Mensaje msjEnfrente = new Mensaje("tell",this,enfrente,"Coloquial","trafico","Urge que te muevas",textArea);
+                enfrente.recibirMensaje(msjEnfrente);
+            }
+            puedeAvanzar = true;
+            colisionSemaforos();
+            if(!puedeAvanzar)
+                puedeSaltarseAlto = true;
+            else
+                puedeSaltarseAlto = false;
         }
     }
 }

@@ -230,22 +230,22 @@ public abstract class Auto {
         for (int i=0; i <semaforos.size();i++){
             int rojo=semaforos.get(i).esRojoCarril(this.getCarril());
             if(rojo>0){
-                if(this.direccion==direccion.ABAJO && !puedeSaltarseAlto){
+                if(this.direccion==direccion.ABAJO && !puedeSaltarseAlto && !(this instanceof Ambulancia)){
                     if((rojo-(this.posY+(this.ALTOAUTO-3))>0)&&(rojo-(this.posY+(this.ALTOAUTO-3)))<10){
                         this.puedeAvanzar=false;
                     }
                 }
-                if(this.direccion==direccion.ARRIBA && !puedeSaltarseAlto){
+                if(this.direccion==direccion.ARRIBA && !puedeSaltarseAlto && !(this instanceof Ambulancia)){
                     if((this.posY-rojo>0)&&(this.posY-rojo)<10){
                         this.puedeAvanzar=false;
                     }
                 }
-                if(this.direccion==direccion.IZQUIERDA && !puedeSaltarseAlto){
+                if(this.direccion==direccion.IZQUIERDA && !puedeSaltarseAlto && !(this instanceof Ambulancia)){
                     if((this.posX-rojo>0)&&(this.posX-rojo)<10){
                         this.puedeAvanzar=false;
                     }
                 }
-                 if(this.direccion==direccion.DERECHA && !puedeSaltarseAlto){
+                 if(this.direccion==direccion.DERECHA && !puedeSaltarseAlto && !(this instanceof Ambulancia)){
                     if((rojo-this.posX>0)&&(rojo-this.posX)<this.ALTOAUTO){
                         this.puedeAvanzar=false;
                     }

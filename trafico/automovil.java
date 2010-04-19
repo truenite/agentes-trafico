@@ -85,6 +85,7 @@ public class automovil extends Auto {
             avanzarY();
             cambiarCarril();
         }
+        this.setVelocidadActual(1);
     }
 
     public void cambiarCarril() {
@@ -281,7 +282,6 @@ public class automovil extends Auto {
 
     public void recibirMensaje(Mensaje msj){
         String contenido = msj.getContenido();
-        System.out.println("entro: "+contenido);
         if(contenido.equals("Urge que te muevas")){
             Mensaje msjRespuesta = new Mensaje("tell",this,msj.getEmisor(),"Coloquial","trafico","Ahi voy",textArea);
             ((Auto)msj.getEmisor()).recibirMensaje(msjRespuesta);
@@ -302,11 +302,12 @@ public class automovil extends Auto {
             }
             puedeAvanzar = true;
             colisionSemaforos();
-            if(!puedeAvanzar)
+            if(!puedeAvanzar){
                 puedeSaltarseAlto = true;
+                System.out.println(debeCambiarCarril);
+            }
             else
                 puedeSaltarseAlto = false;
-            System.out.println("Frente: "+enfrente+" this: "+this);
         }
     }
 
