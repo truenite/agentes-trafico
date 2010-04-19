@@ -11,6 +11,7 @@ import java.awt.Image;
 import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -38,8 +39,11 @@ public abstract class Auto {
     protected String RUTAIMAGENAUTOIZQUIERDA;
     protected String RUTAIMAGENAUTODERECHA ;
     protected Calle calle;
+    protected JTextArea textArea;
+    protected boolean puedeSaltarseAlto;
+    
 
-     public Auto(Calle calle,Carril miCarril, ArrayList <Auto>lCoches, ArrayList<Semaforo> semaforos){
+     public Auto(Calle calle,Carril miCarril, ArrayList <Auto>lCoches, ArrayList<Semaforo> semaforos, JTextArea tarea){
         this.inicioX =  (int)miCarril.getPuntoInicial().getX();
         this.posX =inicioX;
         this.calle=calle;
@@ -59,6 +63,7 @@ public abstract class Auto {
             this.inicioY =  miCarril.getLongitud() - this.ALTOAUTO;
             posY =inicioY;
         }
+        textArea = tarea;
     }
 
     abstract void seleccionarImagen(DireccionCalle direccion);
@@ -225,22 +230,22 @@ public abstract class Auto {
         for (int i=0; i <semaforos.size();i++){
             int rojo=semaforos.get(i).esRojoCarril(this.getCarril());
             if(rojo>0){
-                if(this.direccion==direccion.ABAJO ){
+                if(this.direccion==direccion.ABAJO && !puedeSaltarseAlto){
                     if((rojo-(this.posY+(this.ALTOAUTO-3))>0)&&(rojo-(this.posY+(this.ALTOAUTO-3)))<10){
                         this.puedeAvanzar=false;
                     }
                 }
-                if(this.direccion==direccion.ARRIBA ){
+                if(this.direccion==direccion.ARRIBA && !puedeSaltarseAlto){
                     if((this.posY-rojo>0)&&(this.posY-rojo)<10){
                         this.puedeAvanzar=false;
                     }
                 }
-                if(this.direccion==direccion.IZQUIERDA ){
+                if(this.direccion==direccion.IZQUIERDA && !puedeSaltarseAlto){
                     if((this.posX-rojo>0)&&(this.posX-rojo)<10){
                         this.puedeAvanzar=false;
                     }
                 }
-                 if(this.direccion==direccion.DERECHA ){
+                 if(this.direccion==direccion.DERECHA && !puedeSaltarseAlto){
                     if((rojo-this.posX>0)&&(rojo-this.posX)<this.ALTOAUTO){
                         this.puedeAvanzar=false;
                     }
@@ -252,4 +257,5 @@ public abstract class Auto {
     public DireccionCalle getDireccion(){
         return direccion;
     }
+    public abstract void recibirMensaje(Mensaje msj);
 }

@@ -14,13 +14,13 @@ import javax.swing.JTextArea;
 public class Mensaje {
 
     private String performativa;
-    private String emisor;
-    private String receptor;
+    private Object emisor;
+    private Object receptor;
     private String lenguaje;
     private String ontologia;
     private String contenido;
 
-    public Mensaje(String performativa,String emisor,String receptor,String lenguaje,String ontologia,String contenido, JTextArea textArea){
+    public Mensaje(String performativa,Object emisor,Object receptor,String lenguaje,String ontologia,String contenido, JTextArea textArea){
         this.performativa = performativa;
         this.emisor = emisor;
         this.receptor = receptor;
@@ -32,14 +32,14 @@ public class Mensaje {
     }
 
     public String toString(){
-        return performativa+"\n";
+        return "("+performativa+" :emisor "+emisor+" :receptor "+receptor+" :lenguaje "+lenguaje+" :ontologia "+ontologia+" :contenido "+contenido+")\n";
     }
     
     public String getContenido() {
         return contenido;
     }
 
-    public String getEmisor() {
+    public Object getEmisor() {
         return emisor;
     }
 
@@ -55,7 +55,7 @@ public class Mensaje {
         return performativa;
     }
 
-    public String getReceptor() {
+    public Object getReceptor() {
         return receptor;
     }
 
@@ -63,7 +63,7 @@ public class Mensaje {
         this.contenido = contenido;
     }
 
-    public void setEmisor(String emisor) {
+    public void setEmisor(Object emisor) {
         this.emisor = emisor;
     }
 
@@ -79,7 +79,7 @@ public class Mensaje {
         this.performativa = performativa;
     }
 
-    public void setReceptor(String receptor) {
+    public void setReceptor(Object receptor) {
         this.receptor = receptor;
     }
 

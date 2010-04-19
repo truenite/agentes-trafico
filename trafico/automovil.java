@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -27,9 +28,11 @@ public class automovil extends Auto {
     protected boolean puedeCambiarCarrilMenor = false;
     protected boolean debeCambiarCarril = false;
     protected boolean colisionOtro = false;
+    private int posicion;
 
-    public automovil(Calle calle, Carril miCarril, ArrayList<Auto> lCoches, ArrayList<Semaforo> semaforo) {
-        super(calle, miCarril, lCoches, semaforo);
+
+    public automovil(Calle calle, Carril miCarril, ArrayList<Auto> lCoches, ArrayList<Semaforo> semaforo, JTextArea textArea) {
+        super(calle, miCarril, lCoches, semaforo, textArea);
         seleccionarImagen(this.getDireccion());
         this.setVelocidadActual(1);
         this.carrilLateralMayor = this.calle.getCarrilesLateralMayor(miCarril);
@@ -63,6 +66,7 @@ public class automovil extends Auto {
     }
 
     public void actualizar(long tiempoTranscurrido,int posicion){
+        this.posicion = posicion;
         if(direccion == DireccionCalle.IZQUIERDA ){
             colisionesHorizontales(posicion);
             colisionSemaforos();
@@ -89,6 +93,7 @@ public class automovil extends Auto {
                 if (this.getDireccion() == DireccionCalle.IZQUIERDA) {
                     this.posY = this.carrilLateralMayor.getPuntoInicial().y;
                     this.miCarril = carrilLateralMayor;
+                    this.setVelocidadActual(1);
                 } else {
                     this.posX = this.carrilLateralMayor.getPuntoInicial().x;
                     this.miCarril = carrilLateralMayor;
@@ -99,6 +104,7 @@ public class automovil extends Auto {
                     if (this.getDireccion() == DireccionCalle.IZQUIERDA) {
                         this.posY = this.carrilLateralMenor.getPuntoInicial().y;
                         this.miCarril = carrilLateralMenor;
+                        this.setVelocidadActual(1);
                     } else {
                         this.posX = this.carrilLateralMenor.getPuntoInicial().x;
                         this.miCarril = carrilLateralMenor;
@@ -134,7 +140,6 @@ public class automovil extends Auto {
                     if ((aux instanceof Ambulancia || aux instanceof Patrulla)) {
                         if ((aux.getPosX() > this.getPosX()) && (aux.getPosX() - this.getPosX()) < this.ALTOAUTO + 3) {
                             debeCambiarCarril = true;
-
                         }
                     }
 
@@ -190,7 +195,6 @@ public class automovil extends Auto {
                     if ((aux instanceof Ambulancia || aux instanceof Patrulla)) {
                         if ((aux.getPosY() > this.getPosY()) && (aux.getPosY() - this.getPosY()) < this.ALTOAUTO +3) {
                             debeCambiarCarril = true;
-
                         }
                     }
 
@@ -276,12 +280,34 @@ public class automovil extends Auto {
     }
 
     public void recibirMensaje(Mensaje msj){
-        
-
-    }
-
-    public void mandarMensaje(Object obj){
-
+        String contenido = msj.getContenido();
+        System.out.println("entro: "+contenido);
+        if(contenido.equals("Urge que te muevas")){
+            Mensaje msjRespuesta = new Mensaje("tell",this,msj.getEmisor(),"Coloquial","trafico","Ahi voy",textArea);
+            ((Auto)msj.getEmisor()).recibirMensaje(msjRespuesta);
+            this.setVelocidadActual(2f);
+            Auto enfrente = null;
+            if(direccion == DireccionCalle.IZQUIERDA ){
+                enfrente = colisionesHorizontales(posicion);
+            }
+            if(direccion == DireccionCalle.ABAJO){
+                enfrente = colisionesVerticalesAbajo(posicion);
+            }
+            if(direccion == DireccionCalle.ARRIBA){
+                enfrente = colisionesVerticalesArriba(posicion);
+            }
+            if(enfrente != null){
+                Mensaje msjEnfrente = new Mensaje("tell",this,enfrente,"Coloquial","trafico","Urge que te muevas",textArea);
+                enfrente.recibirMensaje(msjEnfrente);
+            }
+            puedeAvanzar = true;
+            colisionSemaforos();
+            if(!puedeAvanzar)
+                puedeSaltarseAlto = true;
+            else
+                puedeSaltarseAlto = false;
+            System.out.println("Frente: "+enfrente+" this: "+this);
+        }
     }
 
 }

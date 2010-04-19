@@ -112,15 +112,15 @@ public  class simulacionTrafico extends ZonaJuego {
         int randomCarril=(int)(Math.random() * listaCalles.get(randomCalle).getCarriles().length);
         int tipo=(int)(Math.random()*10);
         if(tipo>=0 && tipo <2){
-           autos.add( new Ambulancia(listaCalles.get(randomCalle),listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos));
+           autos.add( new Ambulancia(listaCalles.get(randomCalle),listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos,textArea));
           
         }else{
             if(tipo>=2 && tipo <4){
-                autos.add( new Patrulla(listaCalles.get(randomCalle),listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos));
+                autos.add( new Patrulla(listaCalles.get(randomCalle),listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos,textArea));
                
             }else{
                 if(tipo>=4 && tipo<9){
-                 autos.add( new automovil(listaCalles.get(randomCalle),listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos));
+                 autos.add( new automovil(listaCalles.get(randomCalle),listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos,textArea));
                 }/*else{
                  autos.add( new Tamalero(listaCalles.get(randomCalle),listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos));
                 }*/

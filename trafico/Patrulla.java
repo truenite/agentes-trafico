@@ -7,6 +7,7 @@ package trafico;
 
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -25,8 +26,8 @@ public class Patrulla extends Auto {
     protected boolean colisionOtro = false;
 
 
-    public Patrulla(Calle calle,Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos){
-        super(calle,miCarril, lCoches, semaforos);
+    public Patrulla(Calle calle,Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos, JTextArea textArea) {
+        super(calle, miCarril, lCoches, semaforos, textArea);
         seleccionarImagen(this.getDireccion());
         this.setVelocidadActual(1.5f);
         this.carrilLateralMayor = this.calle.getCarrilesLateralMayor(miCarril);
@@ -264,5 +265,12 @@ public class Patrulla extends Auto {
 
         }
         return autoRegreso;
+    }
+    public void recibirMensaje(Mensaje msj){
+        String contenido = msj.getContenido();
+        if(contenido.equals("Dejame pasar")){
+            Mensaje msjRespuesta = new Mensaje("tell",this,msj.getEmisor(),"Coloquial","trafico","Ahi voy",textArea);
+
+        }
     }
 }

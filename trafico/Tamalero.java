@@ -7,6 +7,7 @@ package trafico;
 
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -17,8 +18,8 @@ public class Tamalero extends Auto {
     private  String RUTAIMAGENAUTOABAJO = "/imagenes/tamalero/tamaleroAba.png";
     private  String RUTAIMAGENAUTOIZQUIERDA = "/imagenes/tamalero/tamaleroIzq.png";
     private  String RUTAIMAGENAUTODERECHA = "/imagenes/tamalero/tamaleroDer.png";
-    public Tamalero(Calle calle,Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos){
-        super(calle,miCarril, lCoches, semaforos);
+    public Tamalero(Calle calle,Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos, JTextArea textArea) {
+        super(calle, miCarril, lCoches, semaforos, textArea);
         seleccionarImagen(this.getDireccion());
         this.setVelocidadActual(0.5f);
 
@@ -40,6 +41,8 @@ public class Tamalero extends Auto {
 
         }
    }
-     public void colisionSemaforos(){}
+   public void colisionSemaforos(){}
+
+   public void recibirMensaje(Mensaje msj){ }
 
 }
