@@ -30,6 +30,18 @@ public class Mensaje {
         textArea.append(this.toString());
         textArea.setCaretPosition(textArea.getDocument().getLength());
     }
+    public Mensaje(String performativa,Object emisor,Object receptor,String lenguaje,String ontologia,String contenido, JTextArea textArea, boolean mostrar){
+        this.performativa = performativa;
+        this.emisor = emisor;
+        this.receptor = receptor;
+        this.lenguaje = lenguaje;
+        this.ontologia = ontologia;
+        this.contenido = contenido;
+        if(mostrar){
+            textArea.append(this.toString());
+            textArea.setCaretPosition(textArea.getDocument().getLength());
+        }
+    }
 
     public String toString(){
         return "("+performativa+" :emisor "+emisor+" :receptor "+receptor+" :lenguaje "+lenguaje+" :ontologia "+ontologia+" :contenido "+contenido+")\n";

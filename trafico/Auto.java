@@ -41,9 +41,9 @@ public abstract class Auto {
     protected Calle calle;
     protected JTextArea textArea;
     protected boolean puedeSaltarseAlto;
-    
+    protected boolean mostrar;
 
-     public Auto(Calle calle,Carril miCarril, ArrayList <Auto>lCoches, ArrayList<Semaforo> semaforos, JTextArea tarea){
+     public Auto(Calle calle,Carril miCarril, ArrayList <Auto>lCoches, ArrayList<Semaforo> semaforos, JTextArea tarea, boolean mostrar){
         this.inicioX =  (int)miCarril.getPuntoInicial().getX();
         this.posX =inicioX;
         this.calle=calle;
@@ -254,8 +254,43 @@ public abstract class Auto {
         }
     }
 
+    /*
+     * Checa si el coche está en el rango de los semaforos para poder contarlo y hacer las contrataciones
+     *
+     *
+     */
+    public boolean rangoSemaforoInteligente(Semaforo sem){
+        int distancia=sem.getPosicion(this.getCarril());
+        if(distancia>0){
+            if(this.direccion==direccion.ABAJO){
+                if((distancia-(this.posY+(this.ALTOAUTO-3))>0)&&(distancia-(this.posY+(this.ALTOAUTO-3)))<120){
+                    return true;
+                }
+            }
+            if(this.direccion==direccion.ARRIBA){
+                if((this.posY-distancia>0)&&(this.posY-distancia)<120){
+                    return true;
+                }
+            }
+            if(this.direccion==direccion.IZQUIERDA){
+                if((this.posX-distancia>0)&&(this.posX-distancia)<120){
+                    return true;
+                }
+            }
+             if(this.direccion==direccion.DERECHA){
+                if((distancia-this.posX>0)&&(distancia-this.posX)<this.ALTOAUTO){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public DireccionCalle getDireccion(){
         return direccion;
     }
     public abstract void recibirMensaje(Mensaje msj);
+    public void setMostrar(boolean mostrar){
+        this.mostrar = mostrar;
+    }
 }

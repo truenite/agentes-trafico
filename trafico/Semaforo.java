@@ -7,6 +7,8 @@ package trafico;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.util.ArrayList;
+import javax.swing.JTextArea;
 /**
  *
  * @author Ruco
@@ -25,6 +27,8 @@ public class Semaforo {
     long tiempoAcumulado=0;
     private final int  TIEMPOMAXIMO=30000;
     private final int  TIEMPOMINIMO=0;
+    private JTextArea textArea;
+    protected   ArrayList <Auto> listaCoches;
 
     public Semaforo(Calle calleHorizontal,Calle CalleVertical, int tiempoHorizontal, int tiempoVertical){
            this.calleHorizontal=calleHorizontal;
@@ -34,6 +38,13 @@ public class Semaforo {
            this.posicion = new Point((int)calleVertical.getPosicionInicial().getX(),(int)calleHorizontal.getPosicionInicial().getY());
            this.turno=turno.HORIZONTAL;
            contarCarriles();
+    }
+
+    public void addListaCoches(ArrayList<Auto> listaCoches){
+        this.listaCoches = listaCoches;
+    }
+    public void addTextArea(JTextArea textArea){
+        this.textArea = textArea;
     }
     
     public Semaforo(Calle [] calles , int tiempoHorizontal, int tiempoVertical){
@@ -95,7 +106,6 @@ public class Semaforo {
     }
     public Point getPuntoFinal(){
         return new Point(this.posicion.x+calleVertical.getAnchoCalle(),this.posicion.y+calleHorizontal.getAnchoCalle());
-        
     }
     public turno getTurno(){
         return this.turno;
@@ -179,13 +189,33 @@ public class Semaforo {
             }
         }
         return -1;
-        
     }
-
-
-
-
-
+    public int getPosicion(Carril carril){
+        Carril[] h=this.calleHorizontal.getCarriles();
+        Carril[] v=this.calleVertical.getCarriles();
+        if(this.turno==turno.DESCOMPUESTO){
+            return -1;
+        }
+        for(int i=0; i<h.length; i++){
+            if(h[i].equals(carril)){
+                if(carril.getDireccion()== DireccionCalle.DERECHA){
+                     return (int) this.posicion.getX();
+                }else{
+                     return (int) this.posicion.getX()+calleVertical.getAnchoCalle();
+                }
+            }
+        }
+        for(int i=0; i<v.length; i++){
+            if(v[i].equals(carril)){
+                if(carril.getDireccion()==DireccionCalle.ABAJO){
+                    return (int) this.posicion.getY();
+                }else{
+                    return (int) this.posicion.getY()+calleHorizontal.getAnchoCalle();
+                }
+            }
+        }
+        return -1;
+    }
     public void dibujarSemaforoEnCalleHorizontal(Graphics g){
         int x=this.posicion.x;
         int y=this.posicion.y;
@@ -222,8 +252,8 @@ public class Semaforo {
         int[] arregloTiempos = new int[]{tiempoVertical/1000,tiempoHorizontal/1000};
         return arregloTiempos;
     }
-public void imprimirTiempos(){
-    System.out.println("tiempov "+this.tiempoVertical +" tiempoH "+ this.tiempoHorizontal);
-}
+    public void imprimirTiempos(){
+        System.out.println("tiempov "+this.tiempoVertical +" tiempoH "+ this.tiempoHorizontal);
+    }
 }
 

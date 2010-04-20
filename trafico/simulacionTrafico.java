@@ -36,9 +36,11 @@ public  class simulacionTrafico extends ZonaJuego {
     private int tiempoTotalCarros=0;
     private final int TIEMPOCREARCARRO=500;
     private JTextArea textArea;
+    private boolean mostrar;
 
 
     public simulacionTrafico() {
+        mostrar = false;
         calle1=new Calle(new Point(0,195), "horizontal", 1100, 4, DireccionCalle.IZQUIERDA, 0, DireccionCalle.DERECHA, 25, 0);
         calle2=new Calle(new Point(176,0), "vertical", 460, 2, DireccionCalle.ABAJO, 0, DireccionCalle.ARRIBA, 35, 0);
         calle3=new Calle(new Point(476,0), "vertical", 460, 2, DireccionCalle.ABAJO, 2, DireccionCalle.ARRIBA, 35, 10);
@@ -56,10 +58,14 @@ public  class simulacionTrafico extends ZonaJuego {
         listaCalles.add(calle2);
         listaCalles.add(calle3);
         listaCalles.add(calle4);
+        for(Semaforo sem: semaforos)
+            sem.addListaCoches(autos);
     }
 
     public void agregarTextArea(JTextArea text){
         this.textArea = text;
+        for(Semaforo sem: semaforos)
+            sem.addTextArea(textArea);
     }
 
     @Override
@@ -112,15 +118,15 @@ public  class simulacionTrafico extends ZonaJuego {
         int randomCarril=(int)(Math.random() * listaCalles.get(randomCalle).getCarriles().length);
         int tipo=(int)(Math.random()*10);
         if(tipo>=0 && tipo <2){
-           autos.add( new Ambulancia(listaCalles.get(randomCalle),listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos,textArea));
+           autos.add( new Ambulancia(listaCalles.get(randomCalle),listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos,textArea,mostrar));
           
         }else{
             if(tipo>=2 && tipo <4){
-                autos.add( new Patrulla(listaCalles.get(randomCalle),listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos,textArea));
+                autos.add( new Patrulla(listaCalles.get(randomCalle),listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos,textArea,mostrar));
                
             }else{
                 if(tipo>=4 && tipo<9){
-                 autos.add( new automovil(listaCalles.get(randomCalle),listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos,textArea));
+                 autos.add( new automovil(listaCalles.get(randomCalle),listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos,textArea,mostrar));
                 }/*else{
                  autos.add( new Tamalero(listaCalles.get(randomCalle),listaCalles.get(randomCalle).getCarriles()[randomCarril], autos,semaforos));
                 }*/
@@ -141,5 +147,14 @@ public  class simulacionTrafico extends ZonaJuego {
     }
     public int[] getTiemposSemaforo(int semaforo){
       return semaforos.get(semaforo).getTiempos();
+    }
+    public void setSemaforoInteligente(int semaforo){
+        //semaforos.get(semaforo).inteligente();
+    }
+    public void setSemaforoInteligenteOff(int semaforo){
+        //semaforos.get(semaforo).inteligente();
+    }
+    public void mostrar(){
+        mostrar = !mostrar;
     }
 }

@@ -124,11 +124,11 @@ public class Ciudad extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(horizontalSemaforoUno, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE))
+                        .addComponent(horizontalSemaforoUno, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(verticalSemaforoUno, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE))
+                        .addComponent(verticalSemaforoUno, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
                     .addComponent(cambiarSemaforoUno))
                 .addContainerGap())
         );
@@ -144,7 +144,7 @@ public class Ciudad extends javax.swing.JFrame {
                     .addComponent(verticalSemaforoUno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cambiarSemaforoUno)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(habilitarSemaforoUno)
                 .addContainerGap())
         );
@@ -192,11 +192,11 @@ public class Ciudad extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(horizontalSemaforoDos, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE))
+                        .addComponent(horizontalSemaforoDos, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(18, 18, 18)
-                        .addComponent(verticalSemaforoDos, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE))
+                        .addComponent(verticalSemaforoDos, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
                     .addComponent(cambiarSemaforoDos))
                 .addContainerGap())
         );
@@ -212,7 +212,7 @@ public class Ciudad extends javax.swing.JFrame {
                     .addComponent(verticalSemaforoDos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cambiarSemaforoDos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(habilitarSemaforoDos)
                 .addContainerGap())
         );
@@ -260,11 +260,11 @@ public class Ciudad extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
-                        .addComponent(horizontalSemaforoTres, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE))
+                        .addComponent(horizontalSemaforoTres, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
-                        .addComponent(verticalSemaforoTres, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE))
+                        .addComponent(verticalSemaforoTres, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
                     .addComponent(cambiarSemaforoTres))
                 .addContainerGap())
         );
@@ -280,7 +280,7 @@ public class Ciudad extends javax.swing.JFrame {
                     .addComponent(verticalSemaforoTres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cambiarSemaforoTres)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(habilitarSemaforoTres)
                 .addContainerGap())
         );
@@ -298,16 +298,16 @@ public class Ciudad extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+            .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 558, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -344,21 +344,22 @@ public class Ciudad extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(26, 26, 26)
-                .addComponent(jButton1)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void cambiarSemaforoUnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarSemaforoUnoActionPerformed
-        // TODO add your handling code here:
         try{
             int tiempoH=Integer.parseInt(this.horizontalSemaforoUno.getText());
             int tiempoV=Integer.parseInt(this.verticalSemaforoUno.getText());
@@ -376,7 +377,6 @@ public class Ciudad extends javax.swing.JFrame {
     }//GEN-LAST:event_cambiarSemaforoUnoActionPerformed
 
     private void habilitarSemaforoUnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitarSemaforoUnoActionPerformed
-        // TODO add your handling code here:
        try{
         if(jPanel1 instanceof simulacionTrafico){
            // System.out.println("algo");
@@ -395,7 +395,6 @@ public class Ciudad extends javax.swing.JFrame {
     }//GEN-LAST:event_habilitarSemaforoUnoActionPerformed
 
     private void cambiarSemaforoDosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarSemaforoDosActionPerformed
-        // TODO add your handling code here:
       try{
         int tiempoH=Integer.parseInt(this.horizontalSemaforoDos.getText());
         int tiempoV=Integer.parseInt(this.verticalSemaforoDos.getText());
@@ -411,8 +410,6 @@ public class Ciudad extends javax.swing.JFrame {
     }//GEN-LAST:event_cambiarSemaforoDosActionPerformed
 
     private void habilitarSemaforoDosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitarSemaforoDosActionPerformed
-        // TODO add your handling code here:
-
         if(jPanel1 instanceof simulacionTrafico){
            // System.out.println("algo");
             simulacionTrafico sim=(simulacionTrafico)jPanel1;
@@ -425,7 +422,6 @@ public class Ciudad extends javax.swing.JFrame {
     }//GEN-LAST:event_habilitarSemaforoDosActionPerformed
 
     private void cambiarSemaforoTresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cambiarSemaforoTresActionPerformed
-        // TODO add your handling code here:
         try{
             int tiempoH=Integer.parseInt(this.horizontalSemaforoTres.getText());
             int tiempoV=Integer.parseInt(this.verticalSemaforoTres.getText());
@@ -443,15 +439,14 @@ public class Ciudad extends javax.swing.JFrame {
     }//GEN-LAST:event_cambiarSemaforoTresActionPerformed
 
     private void habilitarSemaforoTresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_habilitarSemaforoTresActionPerformed
-        // TODO add your handling code here:
-          if(jPanel1 instanceof simulacionTrafico){
-           // System.out.println("algo");
+        if(jPanel1 instanceof simulacionTrafico){
             simulacionTrafico sim=(simulacionTrafico)jPanel1;
-             if(habilitarSemaforoTres.isSelected()){
+            if(habilitarSemaforoTres.isSelected()){
                 sim.encenderSemaforo(2);
-             }else{
+            }
+            else{
                 sim.apagarSemaforo(2);
-             }
+            }
         }
     }//GEN-LAST:event_habilitarSemaforoTresActionPerformed
 

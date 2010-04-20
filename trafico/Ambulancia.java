@@ -20,8 +20,8 @@ public class Ambulancia extends Auto {
     private  String RUTAIMAGENAUTODERECHA = "/imagenes/ambulancia/ambulanciaDer.png";
     protected boolean puedeSaltarseAlto;
     
-    public Ambulancia(Calle calle,Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos, JTextArea textArea) {
-        super(calle, miCarril, lCoches, semaforos, textArea);
+    public Ambulancia(Calle calle,Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos, JTextArea textArea, boolean mostrar) {
+        super(calle, miCarril, lCoches, semaforos, textArea, mostrar);
         seleccionarImagen(this.getDireccion());
         this.setVelocidadActual(2);
         puedeSaltarseAlto = true;

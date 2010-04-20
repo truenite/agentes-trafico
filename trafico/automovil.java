@@ -31,8 +31,8 @@ public class automovil extends Auto {
     private int posicion;
 
 
-    public automovil(Calle calle, Carril miCarril, ArrayList<Auto> lCoches, ArrayList<Semaforo> semaforo, JTextArea textArea) {
-        super(calle, miCarril, lCoches, semaforo, textArea);
+    public automovil(Calle calle, Carril miCarril, ArrayList<Auto> lCoches, ArrayList<Semaforo> semaforo, JTextArea textArea, boolean mostrar) {
+        super(calle, miCarril, lCoches, semaforo, textArea, mostrar);
         seleccionarImagen(this.getDireccion());
         this.setVelocidadActual(1);
         this.carrilLateralMayor = this.calle.getCarrilesLateralMayor(miCarril);

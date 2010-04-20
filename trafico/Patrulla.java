@@ -27,8 +27,8 @@ public class Patrulla extends Auto {
     protected int posicion;
 
 
-    public Patrulla(Calle calle,Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos, JTextArea textArea) {
-        super(calle, miCarril, lCoches, semaforos, textArea);
+    public Patrulla(Calle calle,Carril miCarril, ArrayList <Auto>lCoches,ArrayList<Semaforo> semaforos, JTextArea textArea, boolean mostrar) {
+        super(calle, miCarril, lCoches, semaforos, textArea, mostrar);
         seleccionarImagen(this.getDireccion());
         this.setVelocidadActual(1.5f);
         this.carrilLateralMayor = this.calle.getCarrilesLateralMayor(miCarril);
