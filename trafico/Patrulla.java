@@ -58,9 +58,30 @@ public class Patrulla extends Auto {
 
         }
    }
+   public void actualizar(long tiempoTranscurrido,int posicion){
+        this.posicion = posicion;
+        if(direccion == DireccionCalle.IZQUIERDA ){
+            colisionesHorizontales(posicion);
+            colisionSemaforos();
+            avanzarX();
+            cambiarCarril();
+        }
+        if(direccion == DireccionCalle.ABAJO){
+            colisionesVerticalesAbajo(posicion);
+            colisionSemaforos();
+            avanzarY();
+            cambiarCarril();
+        }
+        if(direccion == DireccionCalle.ARRIBA){
+            colisionesVerticalesArriba(posicion);
+            colisionSemaforos();
+            avanzarY();
+            cambiarCarril();
+        }
+        this.setVelocidadActual(1);
+    }
 
-
-     public void cambiarCarril() {
+    public void cambiarCarril() {
         if (debeCambiarCarril && colisionOtro == false) {
             if (puedeCambiarCarrilMayor == true && carrilLateralMayor != null) {
                 if (this.getDireccion() == DireccionCalle.IZQUIERDA) {

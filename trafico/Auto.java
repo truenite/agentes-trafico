@@ -259,31 +259,31 @@ public abstract class Auto {
      *
      *
      */
-    public boolean rangoSemaforoInteligente(Semaforo sem){
+    public String rangoSemaforoInteligente(Semaforo sem){
         int distancia=sem.getPosicion(this.getCarril());
         if(distancia>0){
             if(this.direccion==direccion.ABAJO){
-                if((distancia-(this.posY+(this.ALTOAUTO-3))>0)&&(distancia-(this.posY+(this.ALTOAUTO-3)))<120){
-                    return true;
+                if((distancia-(this.posY+(this.ALTOAUTO-3))>0)&&(distancia-(this.posY+(this.ALTOAUTO-3)))<150){
+                    return "Arriba";
                 }
             }
             if(this.direccion==direccion.ARRIBA){
-                if((this.posY-distancia>0)&&(this.posY-distancia)<120){
-                    return true;
+                if((this.posY-distancia>0)&&(this.posY-distancia)<150){
+                    return "Abajo";
                 }
             }
             if(this.direccion==direccion.IZQUIERDA){
-                if((this.posX-distancia>0)&&(this.posX-distancia)<120){
-                    return true;
+                if((this.posX-distancia>0)&&(this.posX-distancia)<150){
+                    return "Derecha";
                 }
             }
              if(this.direccion==direccion.DERECHA){
                 if((distancia-this.posX>0)&&(distancia-this.posX)<this.ALTOAUTO){
-                    return true;
+                    return "Izquierda";
                 }
             }
         }
-        return false;
+        return "null";
     }
 
     public DireccionCalle getDireccion(){

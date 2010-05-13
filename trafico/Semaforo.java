@@ -25,6 +25,8 @@ public class Semaforo {
     int carrilesIzquierda=0;
     int carrilesDerecha=0;
     long tiempoAcumulado=0;
+    private int contadorCambio = 0;
+    private long tiempoAcumuladoCambio=0;
     private final int  TIEMPOMAXIMO=30000;
     private final int  TIEMPOMINIMO=0;
     private JTextArea textArea;
@@ -69,7 +71,9 @@ public class Semaforo {
         if((tiempoHorizontal>=TIEMPOMINIMO && tiempoHorizontal<=TIEMPOMAXIMO)&& (tiempoVertical>=TIEMPOMINIMO && tiempoVertical<=TIEMPOMAXIMO)){
             this.tiempoHorizontal=tiempoHorizontal;
             this.tiempoVertical=tiempoVertical;
-           tiempoAcumulado=0;
+            tiempoAcumulado=0;
+            tiempoAcumuladoCambio=0;
+            contadorCambio=0;
         }
        
         return false;
@@ -78,29 +82,98 @@ public class Semaforo {
     public void apagar(){
         this.turno=turno.DESCOMPUESTO;
         tiempoAcumulado=0;
-
+        tiempoAcumuladoCambio=0;
+        contadorCambio=0;
     }
     public void encender(){
           this.turno=turno.HORIZONTAL;
     }
     public void actualizar(int tiempo){
         tiempoAcumulado+=tiempo;
+        tiempoAcumuladoCambio+=tiempo;
         if(turno==turno.VERTICAL){
             if(tiempoAcumulado>=tiempoVertical){
                 cambiarTurno();
-                tiempoAcumulado=0;
+            }
+            if(tiempoAcumuladoCambio >= (tiempoVertical/3) && contadorCambio == 0){
+                contadorCambio ++;
+                checarCambioInteligente();
+            }
+            if(tiempoAcumuladoCambio >= ((2*tiempoVertical)/3) && contadorCambio == 1){
+                contadorCambio ++;
+                checarCambioInteligente();
             }
         }else{
             if(turno==turno.HORIZONTAL){
                 if(tiempoAcumulado>=tiempoHorizontal){
                     cambiarTurno();
-                    tiempoAcumulado=0;
+                }
+                if(tiempoAcumuladoCambio >= (tiempoHorizontal/3) && contadorCambio == 0){
+                    contadorCambio ++;
+                    checarCambioInteligente();
+                }
+                if(tiempoAcumuladoCambio >= ((2*tiempoHorizontal)/3) && contadorCambio == 1){
+                    contadorCambio ++;
+                    checarCambioInteligente();
                 }
             }
         }
-        
     }
-
+    public void checarCambioInteligente(){
+        int contadorVertical = 0;
+        for(Auto a : listaCoches){
+            if(a.rangoSemaforoInteligente(this).equals("Derecha")){
+                contadorVertical++;
+            }
+        }
+        Mensaje msjVertical = new Mensaje("tell",this,this,"Coloquial","trafico","Tengo "+contadorVertical+" a la derecha",textArea);
+        this.recibirMensaje(msjVertical);
+    }
+    private void recibirMensaje(Mensaje msj){
+        String mensaje = msj.getContenido();
+        if(mensaje.contains("derecha")){
+            int temp = Integer.parseInt(mensaje.substring(mensaje.indexOf(" ")+1,mensaje.indexOf(" a la derecha")));
+            int mios = 0;
+            for(Auto a : listaCoches){
+                if(a.rangoSemaforoInteligente(this).equals("Abajo") || a.rangoSemaforoInteligente(this).equals("Arriba")){
+                    mios++;
+                }
+            }
+            if(mios > temp){
+                Mensaje msjVertical = new Mensaje("tell",this,this,"Coloquial","trafico","Yo tengo mas!",textArea);
+                this.recibirMensaje(msjVertical);
+            }else{
+                if(mios < temp){
+                    Mensaje msjVertical = new Mensaje("tell",this,this,"Coloquial","trafico","Yo tengo menos!",textArea);
+                    this.recibirMensaje(msjVertical);
+                }else{
+                    Mensaje msjVertical = new Mensaje("tell",this,this,"Coloquial","trafico","Yo ando igual!",textArea);
+                    this.recibirMensaje(msjVertical);
+                }
+            }
+        }
+        else{
+            if(mensaje.contains("mas")){
+                Mensaje msjVertical = new Mensaje("tell",this,this,"Coloquial","trafico","Ok!",textArea);
+                this.recibirMensaje(msjVertical);
+                if(turno == turno.HORIZONTAL)
+                    cambiarTurno();
+            }
+            else{
+                if(mensaje.contains("menos")){
+                    Mensaje msjVertical = new Mensaje("tell",this,this,"Coloquial","trafico","Ok!",textArea);
+                    this.recibirMensaje(msjVertical);
+                    if(turno == turno.VERTICAL)
+                        cambiarTurno();
+                }else{
+                    if(mensaje.contains("igual")){
+                        Mensaje msjVertical = new Mensaje("tell",this,this,"Coloquial","trafico","Ok!",textArea);
+                        this.recibirMensaje(msjVertical);
+                    }
+                }
+            }
+        }
+    }
     public Point getPuntoInicial(){
         return this.posicion;
     }
@@ -113,9 +186,15 @@ public class Semaforo {
     public void cambiarTurno(){
         if(this.turno==turno.VERTICAL){
             this.turno=turno.HORIZONTAL;
+            tiempoAcumulado = 0;
+            tiempoAcumuladoCambio = 0;
+            contadorCambio = 0;
         }else{
             if(this.turno==turno.HORIZONTAL){
                 this.turno=turno.VERTICAL;
+                tiempoAcumulado = 0;
+                tiempoAcumuladoCambio = 0;
+                contadorCambio = 0;
             }
         }
     }
