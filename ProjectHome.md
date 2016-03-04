@@ -1,0 +1,1 @@
+recrea un posible escenario de modelado con agentes utilizando la implementación de capas, comunicación etc.
